@@ -378,7 +378,7 @@ if (function(a) {
     }, a.OpenStreetMapProvider.prototype = new a.ProviderBase(), a.OpenStreetMapProvider.prototype.constructor = a.OpenStreetMapProvider, 
     a.OpenStreetMapProvider.prototype.geocode = function(a, b) {
         this.externalLoader.setOptions({
-            protocol: "http",
+            protocol: "https",
             host: "nominatim.openstreetmap.org",
             pathname: "search"
         });
@@ -390,7 +390,7 @@ if (function(a) {
         this.executeRequest(c, b);
     }, a.OpenStreetMapProvider.prototype.geodecode = function(a, b, c) {
         this.externalLoader.setOptions({
-            protocol: "http",
+            protocol: "https",
             host: "nominatim.openstreetmap.org",
             pathname: "reverse"
         });
