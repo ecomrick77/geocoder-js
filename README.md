@@ -30,8 +30,8 @@ The following table summarizes the features of each:
   <tbody>
     <tr>
       <td>Google Maps</td>
-      <td>yes</td>
-      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
       <td>yes</td>
     </tr>
     <tr>
