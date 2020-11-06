@@ -6,7 +6,7 @@ PHP](http://geocoder-php.org/Geocoder/) library. It's meant as a compliment for
 client-side geocoding applications.
 
 [![Build
-Status](https://travis-ci.org/ecomrick77/geocoder-js.png?branch=master)](https://travis-ci.org/geocoder-php/geocoder-js)
+Status](https://travis-ci.org/ecomrick77/geocoder-js.svg?branch=master)](https://travis-ci.org/geocoder-php/geocoder-js)
 
 [![Dependency Status](https://david-dm.org/ecomrick77/geocoder-js.png)](https://david-dm.org/geocoder-php/geocoder-js)
 
