@@ -106,6 +106,10 @@ if (function(a) {
 
           case "locationiq":
             c = new a.LocationIQProvider(d, b);
+            break;
+
+          case "mapbox":
+            c = new a.MapboxProvider(d, b);
         }
         return c;
     };
@@ -466,6 +470,67 @@ if (function(a) {
         return c.latitude = 1 * b.lat, c.longitude = 1 * b.lon, c.streetNumber = void 0 !== b.address.house_number ? b.address.house_number : void 0,
         c.streetName = b.address.road, c.city = b.address.city, c.region = b.address.state,
         c.postal_code = b.address.postcode, c;
+    };
+}(GeocoderJS), "undefined" == typeof GeocoderJS && "function" == typeof require) {
+    var GeocoderJS = require("../GeocoderJS.js");
+    require("../Geocoded.js"), require("../providers/ProviderBase.js");
+}
+
+if (function(a) {
+    "use strict";
+    a.MapboxProvider = function(a, b) {
+        if (void 0 === a) throw "No external loader defined.";
+        this.externalLoader = a, "object" != typeof b && (b = {});
+        var c = {
+            apiKey: ""
+        };
+        for (var d in c) void 0 === b[d] && (b[d] = c[d]);
+        this.apiKey = b.apiKey;
+    }, a.MapboxProvider.prototype = new a.ProviderBase(), a.MapboxProvider.prototype.constructor = a.MapboxProvider,
+    a.MapboxProvider.prototype.geocode = function(a, b) {
+        this.externalLoader.setOptions({
+            protocol: 'https',
+            host: 'api.mapbox.com',
+            pathname: 'geocoding/v5/mapbox.places/'+encodeURIComponent(a)+'.json'
+        });
+        var c = {
+            access_token: this.apiKey
+        };
+        this.executeRequest(c, b);
+    }, a.MapboxProvider.prototype.geodecode = function(a, b, c) {
+        this.externalLoader.setOptions({
+            protocol: 'https',
+            host: 'api.mapbox.com',
+            pathname: 'geocoding/v5/mapbox.places/'+b+','+a+'.json'
+        });
+        var d = {
+            access_token: this.apiKey
+        };
+        this.executeRequest(d, c);
+    }, a.MapboxProvider.prototype.executeRequest = function(a, b) {
+        var c = this;
+        this.externalLoader.executeRequest(a, function(a) {
+            var d = [];
+            if (a.features.length) for (var e in a.features) d.push(c.mapToGeocoded(a.features[e]));
+            b(d);
+        });
+    }, a.MapboxProvider.prototype.mapToGeocoded = function(b) {
+        var c = new a.Geocoded();
+
+        c.latitude = b.center[1];
+        c.longitude = b.center[0];
+
+        let address=[];
+        b.context.forEach(function(V,I){
+            address[V.id.split('.')[0]]=V.text;
+        })
+
+        c.city = address.place;
+        c.region = address.region;
+        c.streetName = b.text;
+        c.postal_code = address.postcode;
+
+        return c;
     };
 }(GeocoderJS), "undefined" == typeof GeocoderJS && "function" == typeof require) {
     var GeocoderJS = require("../GeocoderJS.js");

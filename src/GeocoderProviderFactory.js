@@ -47,6 +47,9 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
       case 'locationiq':
         provider = new GeocoderJS.LocationIQProvider(externalLoader, options);
         break;
+      case 'mapbox':
+        provider = new GeocoderJS.MapboxProvider(externalLoader, options);
+        break;
     }
 
     return provider;
