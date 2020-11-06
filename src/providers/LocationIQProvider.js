@@ -1,5 +1,5 @@
 if (typeof GeocoderJS === "undefined" && typeof require === "function") {
-  let GeocoderJS = require("../GeocoderJS.js");
+  var GeocoderJS = require("../GeocoderJS.js");
 }
 
 ;(function (GeocoderJS) {
@@ -15,11 +15,11 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         options = {};
       }
 
-      let defaults = {
+      var defaults = {
         apiKey: ''
       };
 
-      for (let i in defaults) {
+      for (var i in defaults) {
         if (options[i] === undefined) {
           options[i] = defaults[i];
         }
@@ -38,7 +38,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         pathname: 'v1/search.php'
       });
 
-      let params = {
+      var params = {
         key: this.apiKey,
         format: 'json',
         q: encodeURIComponent(searchString),
@@ -55,7 +55,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         pathname: 'v1/reverse.php'
       });
 
-      let options = {
+      var options = {
         key: this.apiKey,
         format: 'json',
         lat: latitude,
@@ -66,25 +66,25 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
     };
 
     GeocoderJS.LocationIQProvider.prototype.mapToGeocoded = function(result) {
-      let geocoded = new GeocoderJS.Geocoded();
+      var geocoded = new GeocoderJS.Geocoded();
       geocoded.latitude = result.lat;
       geocoded.longitude = result.lon;
 
       geocoded.city = result.address.city;
       geocoded.region = result.address.state;
-      geocoded.streetName = result.address.road ?? result.address.pedestrian;
+      geocoded.streetName = (result.address.road !== undefined) ? result.address.road : result.address.pedestrian;
       geocoded.postal_code = result.address.postcode;
 
       return geocoded;
     };
 
     GeocoderJS.LocationIQProvider.prototype.executeRequest = function(params, callback) {
-      let _this = this;
+      var _this = this;
 
       this.externalLoader.executeRequest(params, function(data) {
-        let results = [];
+        var results = [];
         if (data.length) {
-          for (let i in data) {
+          for (var i in data) {
             results.push(_this.mapToGeocoded(data[i]));
           }
         } else {

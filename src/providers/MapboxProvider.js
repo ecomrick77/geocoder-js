@@ -1,5 +1,5 @@
 if (typeof GeocoderJS === "undefined" && typeof require === "function") {
-  let GeocoderJS = require("../GeocoderJS.js");
+  var GeocoderJS = require("../GeocoderJS.js");
 }
 
 ;(function (GeocoderJS) {
@@ -15,11 +15,11 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         options = {};
       }
 
-      let defaults = {
+      var defaults = {
         apiKey: ''
       };
 
-      for (let i in defaults) {
+      for (var i in defaults) {
         if (options[i] === undefined) {
           options[i] = defaults[i];
         }
@@ -38,7 +38,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         pathname: 'geocoding/v5/mapbox.places/'+encodeURIComponent(searchString)+'.json'
       });
 
-      let params = {
+      var params = {
         access_token: this.apiKey
       };
 
@@ -52,7 +52,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         pathname: 'geocoding/v5/mapbox.places/'+longitude+','+latitude+'.json'
       });
 
-      let options = {
+      var options = {
         access_token: this.apiKey
       };
 
@@ -60,11 +60,11 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
     };
 
     GeocoderJS.MapboxProvider.prototype.mapToGeocoded = function(result) {
-      let geocoded = new GeocoderJS.Geocoded();
+      var geocoded = new GeocoderJS.Geocoded();
       geocoded.latitude = result.center[1];
       geocoded.longitude = result.center[0];
 
-      let address=[];
+      var address=[];
       result.context.forEach(function(v,i){
         address[v.id.split('.')[0]]=v.text;
       })
@@ -78,10 +78,10 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
     };
 
     GeocoderJS.MapboxProvider.prototype.executeRequest = function(params, callback) {
-      let _this = this;
+      var _this = this;
 
       this.externalLoader.executeRequest(params, function(data) {
-        let results = [];
+        var results = [];
         if (data.features.length) {
           for (var i in data.features) {
             results.push(_this.mapToGeocoded(data.features[i]));

@@ -1,8 +1,8 @@
 describe("LocationIQ Provider to Geocoded mapping tests", function() {
-  let provider = new GeocoderJS.LocationIQProvider(new GeocoderJS.ExternalURILoader());
-  let geocoded;
+  var provider = new GeocoderJS.LocationIQProvider(new GeocoderJS.ExternalURILoader());
+  var geocoded;
 
-  let stubLocationIQResult = [
+  var stubLocationIQResult = [
     {
       "place_id": "288487333",
       "licence": "https://locationiq.com/attribution",

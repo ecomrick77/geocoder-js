@@ -1,8 +1,8 @@
 describe("Mapbox Provider to Geocoded mapping tests", function() {
-  let provider = new GeocoderJS.MapboxProvider(new GeocoderJS.ExternalURILoader());
-  let geocoded;
+  var provider = new GeocoderJS.MapboxProvider(new GeocoderJS.ExternalURILoader());
+  var geocoded;
 
-  let stubLocationIQResult = [
+  var stubLocationIQResult = [
     {
       "id": "address.7245011240011860",
       "type": "Feature",
