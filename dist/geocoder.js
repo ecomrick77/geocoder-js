@@ -102,6 +102,10 @@ if (function(a) {
 
           case "yandex":
             c = new a.YandexProvider(d, b);
+            break;
+
+          case "locationiq":
+            c = new a.LocationIQProvider(d, b);
         }
         return c;
     };
@@ -405,6 +409,62 @@ if (function(a) {
         var c = new a.Geocoded();
         return c.latitude = 1 * b.lat, c.longitude = 1 * b.lon, c.streetNumber = void 0 !== b.address.house_number ? b.address.house_number : void 0, 
         c.streetName = b.address.road, c.city = b.address.city, c.region = b.address.state, 
+        c.postal_code = b.address.postcode, c;
+    };
+}(GeocoderJS), "undefined" == typeof GeocoderJS && "function" == typeof require) {
+    var GeocoderJS = require("../GeocoderJS.js");
+    require("../Geocoded.js"), require("../providers/ProviderBase.js");
+}
+
+if (function(a) {
+    "use strict";
+    a.LocationIQProvider = function(a, b) {
+        if (void 0 === a) throw "No external loader defined.";
+        this.externalLoader = a, "object" != typeof b && (b = {});
+        var c = {
+            apiKey: ""
+        };
+        for (var d in c) void 0 === b[d] && (b[d] = c[d]);
+        this.apiKey = b.apiKey;
+    }, a.LocationIQProvider.prototype = new a.ProviderBase(), a.LocationIQProvider.prototype.constructor = a.LocationIQProvider,
+    a.LocationIQProvider.prototype.geocode = function(a, b) {
+        this.externalLoader.setOptions({
+            protocol: 'https',
+            host: 'us1.locationiq.com',
+            pathname: 'v1/search.php'
+        });
+        var c = {
+            key: this.apiKey,
+            format: "json",
+            q: a,
+            addressdetails: 1
+        };
+        this.executeRequest(c, b);
+    }, a.LocationIQProvider.prototype.geodecode = function(a, b, c) {
+        this.externalLoader.setOptions({
+            protocol: 'https',
+            host: 'us1.locationiq.com',
+            pathname: 'v1/reverse.php'
+        });
+        var d = {
+            key: this.apiKey,
+            format: "json",
+            lat: a,
+            lon: b,
+            addressdetails: 1
+        };
+        this.executeRequest(d, c);
+    }, a.LocationIQProvider.prototype.executeRequest = function(a, b) {
+        var c = this;
+        this.externalLoader.executeRequest(a, function(a) {
+            var d = [];
+            if (a.length) for (var e in a) d.push(c.mapToGeocoded(a[e])); else d.push(c.mapToGeocoded(a));
+            b(d);
+        });
+    }, a.LocationIQProvider.prototype.mapToGeocoded = function(b) {
+        var c = new a.Geocoded();
+        return c.latitude = 1 * b.lat, c.longitude = 1 * b.lon, c.streetNumber = void 0 !== b.address.house_number ? b.address.house_number : void 0,
+        c.streetName = b.address.road, c.city = b.address.city, c.region = b.address.state,
         c.postal_code = b.address.postcode, c;
     };
 }(GeocoderJS), "undefined" == typeof GeocoderJS && "function" == typeof require) {
