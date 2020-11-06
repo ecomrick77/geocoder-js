@@ -73,16 +73,43 @@ The following table summarizes the features of each:
   </tbody>
 </table>
 
+Leaflet
+---------
+Easily create [Leaflet's](https://leafletjs.com) to display Google Map alternatives on a website. 
+Here's an OpenStreetMap Example:
+```
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="dist/geocoder.js"></script>
+```
+```
+<div id="map" style="width:800px; height:600px;"></div>
+  <script>
+    let openStreetMapGeocoder = GeocoderJS.createGeocoder('openstreetmap');
+    openStreetMapGeocoder.geocode('1600 Pennsylvania Ave NW, Washington, DC', function(result) {
+      let ll = result[0]
+      let mapOptions = {
+        center: [ll.latitude, ll.longitude],
+        zoom: 16
+      }
+      let map = new L.map('map', mapOptions);
+      L.marker([ll.latitude, ll.longitude]).addTo(map);
+      let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      map.addLayer(layer);
+    });
+  </script>
+```
+
 
 Building
 --------
 
-You can build an uglified version of the script by running 'grunt build'.
+The `dist` folder contains the latest build. You are welcome to build your own uglified version of the script by running `grunt build`.
 
 Testing
 -------
 
-Unit tests are handled by Jasmine. To run unit tests from the command line, use 'grunt test'.
+Unit tests are handled by Jasmine. To run unit tests from the command line, use `grunt test`.
 
 Contributing
 ------------
