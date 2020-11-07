@@ -330,8 +330,8 @@ function(t) {
         this.executeRequest(o, t);
     }, t.LocationIQProvider.prototype.mapToGeocoded = function(e) {
         var o = new t.Geocoded();
-        return o.latitude = e.lat, o.longitude = e.lon, o.city = e.address.city, o.region = e.address.state, 
-        o.streetName = void 0 !== e.address.road ? e.address.road : e.address.pedestrian, 
+        return o.latitude = parseFloat(e.lat), o.longitude = parseFloat(e.lon), o.streetNumber = void 0 !== e.address.house_number ? e.address.house_number : null, 
+        o.city = e.address.city, o.region = e.address.state, o.streetName = void 0 !== e.address.road ? e.address.road : e.address.pedestrian, 
         o.postal_code = e.address.postcode, o;
     }, t.LocationIQProvider.prototype.executeRequest = function(e, r) {
         var n = this;
@@ -379,8 +379,8 @@ function(r) {
         var t = [];
         return e.context.forEach(function(e, o) {
             t[e.id.split(".")[0]] = e.text;
-        }), o.city = t.place, o.region = t.region, o.streetName = e.text, o.postal_code = t.postcode, 
-        o;
+        }), o.streetNumber = void 0 !== e.address ? e.address : null, o.city = t.place, 
+        o.region = t.region, o.streetName = e.text, o.postal_code = t.postcode, o;
     }, r.MapboxProvider.prototype.executeRequest = function(e, r) {
         var n = this;
         this.externalLoader.executeRequest(e, function(e) {

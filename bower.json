@@ -15,6 +15,6 @@
     "tests"
   ],
   "devDependencies": {
-    "jasmine": "~v1.3.1"
+    "jasmine": "~v2.2.0"
   }
 }
