@@ -69,6 +69,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         address[v.id.split('.')[0]]=v.text;
       })
 
+      geocoded.streetNumber = (result.address !== undefined) ? result.address : null;
       geocoded.city = address.place;
       geocoded.region = address.region;
       geocoded.streetName = result.text;

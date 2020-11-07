@@ -67,9 +67,10 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 
     GeocoderJS.LocationIQProvider.prototype.mapToGeocoded = function(result) {
       var geocoded = new GeocoderJS.Geocoded();
-      geocoded.latitude = result.lat;
-      geocoded.longitude = result.lon;
+      geocoded.latitude = parseFloat(result.lat);
+      geocoded.longitude = parseFloat(result.lon);
 
+      geocoded.streetNumber = (result.address.house_number !== undefined) ? result.address.house_number : null;
       geocoded.city = result.address.city;
       geocoded.region = result.address.state;
       geocoded.streetName = (result.address.road !== undefined) ? result.address.road : result.address.pedestrian;
