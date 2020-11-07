@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Geocoder.js: Mapquest Simple Example</title>
-    <script src="../dist/geocoder.js"></script>
+<html lang="en">
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <title>Geocoder.js: Google Mapquest Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="../dist/geocoder.js"></script>
     <script>
-      var mapQuestGeocoder = new GeocoderJS.createGeocoder({provider: 'mapquest', apiKey: 'Fmjtd%7Cluurnu6al1%2Cbg%3Do5-9wbg94'});
+      /*
+      var mapQuestGeocoder = new GeocoderJS.createGeocoder({provider: 'mapquest', apiKey: 'YOUR-API-KEY'});
       mapQuestGeocoder.geocode('1600 Pennsylvania Ave NW, Washington, DC', function(result) {
         console.log(result);
       });
@@ -12,9 +16,24 @@
       mapQuestGeocoder.geodecode("44.915", "-93.21", function(result) {
         console.log(result);
       });
+      */
     </script>
   </head>
   <body>
-
+  <div id="map" style="width:800px; height:600px;"></div>
+  <script>
+    let mapquestGeocoder = new GeocoderJS.createGeocoder({provider: 'mapquest', apiKey: 'IAFnuHlha8RNRXdj3HvKCVe64ykVyarb'});
+    mapquestGeocoder.geocode('1600 Pennsylvania Ave NW, Washington, DC', function(result) {
+      let ll = result[0]
+      let mapOptions = {
+        center: [ll.latitude, ll.longitude],
+        zoom: 16
+      }
+      let map = new L.map('map', mapOptions);
+      L.marker([ll.latitude, ll.longitude]).addTo(map);
+      let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      map.addLayer(layer);
+    });
+  </script>
   </body>
 </html>

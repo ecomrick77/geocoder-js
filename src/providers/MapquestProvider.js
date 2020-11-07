@@ -33,7 +33,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 
     GeocoderJS.MapquestProvider.prototype.geocode = function(searchString, callback) {
       this.externalLoader.setOptions({
-        protocol: 'http',
+        protocol: 'https',
         host: 'www.mapquestapi.com',
         pathname: 'geocoding/v1/address'
       });
@@ -50,7 +50,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 
     GeocoderJS.MapquestProvider.prototype.geodecode = function(latitude, longitude, callback) {
       this.externalLoader.setOptions({
-        protocol: 'http',
+        protocol: 'https',
         host: 'www.mapquestapi.com',
         pathname: 'geocoding/v1/reverse'
       });

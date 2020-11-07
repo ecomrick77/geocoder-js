@@ -409,7 +409,7 @@ function(t) {
     }, t.MapquestProvider.prototype = new t.ProviderBase(), t.MapquestProvider.prototype.constructor = t.MapquestProvider, 
     t.MapquestProvider.prototype.geocode = function(e, o) {
         this.externalLoader.setOptions({
-            protocol: "http",
+            protocol: "https",
             host: "www.mapquestapi.com",
             pathname: "geocoding/v1/address"
         });
@@ -422,7 +422,7 @@ function(t) {
         this.executeRequest(e, o);
     }, t.MapquestProvider.prototype.geodecode = function(e, o, t) {
         this.externalLoader.setOptions({
-            protocol: "http",
+            protocol: "https",
             host: "www.mapquestapi.com",
             pathname: "geocoding/v1/reverse"
         });
