@@ -2,7 +2,7 @@ describe("Mapbox Provider to Geocoded mapping tests", function() {
   var provider = new GeocoderJS.MapboxProvider(new GeocoderJS.ExternalURILoader());
   var geocoded;
 
-  var stubLocationIQResult = [
+  var stubMapboxResult = [
     {
       "id": "address.7245011240011860",
       "type": "Feature",
@@ -59,7 +59,7 @@ describe("Mapbox Provider to Geocoded mapping tests", function() {
   ];
 
   beforeEach(function () {
-    geocoded = provider.mapToGeocoded(stubLocationIQResult[0]);
+    geocoded = provider.mapToGeocoded(stubMapboxResult[0]);
   });
 
   it ("expects coordinates to be set correctly", function() {
