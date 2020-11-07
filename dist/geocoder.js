@@ -231,33 +231,39 @@ require("../Geocoded.js"), require("../providers/ProviderBase.js")), function(t)
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js"), 
 require("../Geocoded.js"), require("../providers/ProviderBase.js")), function(n) {
     "use strict";
-    var r, i;
     n.GoogleAPIProvider = function(e, o) {
         if (void 0 === e) throw "No external loader defined.";
-        this.externalLoader = e, r = (o = o || {}).useSSL || !1, (i = o.apiKey || null) && (r = !0);
+        this.externalLoader = e, "object" != typeof o && (o = {});
+        var t, r = {
+            apiKey: ""
+        };
+        for (t in r) void 0 === o[t] && (o[t] = r[t]);
+        this.apiKey = o.apiKey;
     }, n.GoogleAPIProvider.prototype = new n.ProviderBase(), n.GoogleAPIProvider.prototype.constructor = n.GoogleAPIProvider, 
     n.GoogleAPIProvider.prototype.geocode = function(e, o) {
         this.externalLoader.setOptions({
-            protocol: !0 === r ? "https" : "http",
+            protocol: "https",
             host: "maps.googleapis.com",
             pathname: "maps/api/geocode/json"
         });
         e = {
+            key: this.apiKey,
             sensor: !1,
             address: e
         };
-        i && (e.key = i), this.executeRequest(e, o);
+        this.executeRequest(e, o);
     }, n.GoogleAPIProvider.prototype.geodecode = function(e, o, t) {
         this.externalLoader.setOptions({
-            protocol: r ? "https" : "http",
+            protocol: "https",
             host: "maps.googleapis.com",
             pathname: "maps/api/geocode/json"
         });
         o = {
+            key: this.apiKey,
             sensor: !1,
             latlng: e + "," + o
         };
-        i && (o.key = i), this.executeRequest(o, t);
+        this.executeRequest(o, t);
     }, n.GoogleAPIProvider.prototype.executeRequest = function(e, r) {
         var n = this;
         this.externalLoader.executeRequest(e, function(e) {

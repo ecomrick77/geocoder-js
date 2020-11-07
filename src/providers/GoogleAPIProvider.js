@@ -7,23 +7,27 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 ;(function (GeocoderJS) {
   "use strict";
 
-  var useSSL;
-  var apiKey;
-
   GeocoderJS.GoogleAPIProvider = function(_externalLoader, options) {
     if (_externalLoader === undefined) {
       throw "No external loader defined.";
     }
     this.externalLoader = _externalLoader;
 
-    options = (options) ? options : {};
-
-    useSSL = (options.useSSL) ? options.useSSL : false;
-    apiKey = (options.apiKey) ? options.apiKey : null;
-
-    if (apiKey) {
-      useSSL = true;
+    if (typeof options !== 'object') {
+      options = {};
     }
+
+    var defaults = {
+      apiKey: ''
+    };
+
+    for (var i in defaults) {
+      if (options[i] === undefined) {
+        options[i] = defaults[i];
+      }
+    }
+
+    this.apiKey = options.apiKey;
   };
 
   GeocoderJS.GoogleAPIProvider.prototype = new GeocoderJS.ProviderBase();
@@ -31,40 +35,34 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 
   GeocoderJS.GoogleAPIProvider.prototype.geocode = function(searchString, callback) {
     this.externalLoader.setOptions({
-      protocol: (useSSL === true) ? 'https' : 'http',
+      protocol: 'https',
       host: 'maps.googleapis.com',
       pathname: 'maps/api/geocode/json'
     });
 
-    var options = {
+    var params = {
+      key: this.apiKey,
       sensor: false,
       address: searchString
     };
 
-    if (apiKey) {
-      options["key"] = apiKey;
-    }
-
-    this.executeRequest(options, callback);
+    this.executeRequest(params, callback);
   };
 
   GeocoderJS.GoogleAPIProvider.prototype.geodecode = function(latitude, longitude, callback) {
     this.externalLoader.setOptions({
-      protocol: (useSSL) ? 'https' : 'http',
+      protocol: 'https',
       host: 'maps.googleapis.com',
       pathname: 'maps/api/geocode/json'
     });
 
-    var options = {
+    var params = {
+      key: this.apiKey,
       "sensor": false,
       "latlng": latitude + "," + longitude
     };
 
-    if (apiKey) {
-      options["key"] = apiKey;
-    }
-
-    this.executeRequest(options, callback);
+    this.executeRequest(params, callback);
   };
 
   GeocoderJS.GoogleAPIProvider.prototype.executeRequest = function(params, callback) {
