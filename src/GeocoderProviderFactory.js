@@ -28,31 +28,24 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
     var provider;
     var externalLoader = new GeocoderJS.ExternalURILoader();
 
-    switch (options.provider) {
-      case 'google':
-        provider = new GeocoderJS.GoogleAPIProvider(externalLoader, options);
-        break;
-      case 'mapquest':
-        provider = new GeocoderJS.MapquestProvider(externalLoader, options);
-        break;
-      case 'openstreetmap':
-        provider = new GeocoderJS.OpenStreetMapProvider(externalLoader, options);
-        break;
-      case 'bing':
-        provider = new GeocoderJS.BingProvider(externalLoader, options);
-        break;
-      case 'yandex':
-        provider = new GeocoderJS.YandexProvider(externalLoader, options);
-        break;
-      case 'locationiq':
-        provider = new GeocoderJS.LocationIQProvider(externalLoader, options);
-        break;
-      case 'mapbox':
-        provider = new GeocoderJS.MapboxProvider(externalLoader, options);
-        break;
-      case 'tomtom':
-        provider = new GeocoderJS.TomTomProvider(externalLoader, options);
-        break;
+    if(options.provider == 'bing'){
+      provider = new GeocoderJS.BingProvider(externalLoader, options);
+    } else if(options.provider == 'google'){
+      provider = new GeocoderJS.GoogleAPIProvider(externalLoader, options);
+    } else if(options.provider == 'locationlq'){
+      provider = new GeocoderJS.LocationIQProvider(externalLoader, options);
+    } else if(options.provider == 'mapbox'){
+      provider = new GeocoderJS.MapboxProvider(externalLoader, options);
+    } else if(options.provider == 'mapquest'){
+      provider = new GeocoderJS.MapquestProvider(externalLoader, options);
+    } else if(options.provider == 'openstreetmap'){
+      provider = new GeocoderJS.OpenStreetMapProvider(externalLoader, options);
+    } else if(options.provider == 'radar'){
+      provider = new GeocoderJS.RadarProvider(externalLoader, options);
+    } else if(options.provider == 'tomtom'){
+      provider = new GeocoderJS.TomTomProvider(externalLoader, options);
+    } else if(options.provider == 'yandex'){
+      provider = new GeocoderJS.YandexProvider(externalLoader, options);
     }
 
     return provider;

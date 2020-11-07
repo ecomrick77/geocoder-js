@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 /**
  * GeocoderJS.ExternalURILoader
  * - Used to load data from external geocoding engines.
@@ -33,10 +34,10 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
     }
   };
 
-  GeocoderJS.ExternalURILoader.prototype.executeRequest = function(params, callback) {
+  GeocoderJS.ExternalURILoader.prototype.executeRequest = function(params, callback, headers) {
     var _this = this;
     if (typeof XMLHttpRequest !== "undefined") {
-      return executeDOMRequest(params, callback);
+      return executeDOMRequest(params, callback, headers);
     }
 
     try {
@@ -108,7 +109,7 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
       });
     }
 
-    function executeDOMRequest(params, callback) {
+    function executeDOMRequest(params, callback, headers) {
       var req = new XMLHttpRequest(),
         requestUrl = _this.options.protocol + "://" + _this.options.host + "/" + _this.options.pathname + "?",
         JSONPCallback;
@@ -171,6 +172,11 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
         };
 
         req.open("GET", requestUrl);
+        if(Array.isArray(headers)){
+          headers.forEach(function(v,i){
+            req.setRequestHeader(v.name, v.value);
+          });
+        }
         req.send();
       }
     }

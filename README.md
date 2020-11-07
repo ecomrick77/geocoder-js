@@ -29,31 +29,13 @@ The following table summarizes the features of each:
   </thead>
   <tbody>
     <tr>
-      <td>Google Maps</td>
-      <td>yes</td>
-      <td>untested</td>
-      <td>yes</td>
-    </tr>
-    <tr>
-      <td>Mapquest</td>
-      <td>yes</td>
-      <td>untested</td>
-      <td>yes</td>
-    </tr>
-    <tr>
-      <td>OpenStreetMap</td>
-      <td>yes</td>
-      <td>untested</td>
-      <td>yes</td>
-    </tr>
-    <tr>
       <td>Bing</td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Yandex</td>
+      <td>Google Maps</td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
@@ -71,7 +53,31 @@ The following table summarizes the features of each:
       <td>yes</td>
     </tr>
     <tr>
+      <td>Mapquest</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>OpenStreetMap</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>Radar</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>yes</td>
+    </tr>
+    <tr>
       <td>TomTom</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
+      <td>Yandex</td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>

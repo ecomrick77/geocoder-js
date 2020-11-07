@@ -79,66 +79,35 @@ require("../ExternalURILoader.js")), function(r) {
             provider: e
         });
         var t = new r.ExternalURILoader();
-        switch (e.provider) {
-          case "google":
-            o = new r.GoogleAPIProvider(t, e);
-            break;
-
-          case "mapquest":
-            o = new r.MapquestProvider(t, e);
-            break;
-
-          case "openstreetmap":
-            o = new r.OpenStreetMapProvider(t, e);
-            break;
-
-          case "bing":
-            o = new r.BingProvider(t, e);
-            break;
-
-          case "yandex":
-            o = new r.YandexProvider(t, e);
-            break;
-
-          case "locationiq":
-            o = new r.LocationIQProvider(t, e);
-            break;
-
-          case "mapbox":
-            o = new r.MapboxProvider(t, e);
-            break;
-
-          case "tomtom":
-            o = new r.TomTomProvider(t, e);
-        }
-        return o;
+        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
+        o;
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
-function(a, d) {
+function(s, c) {
     "use strict";
-    a.ExternalURILoader = function(e) {
+    s.ExternalURILoader = function(e) {
         this.options = {}, void 0 === e && (e = {}), this.setOptions(e);
-    }, a.ExternalURILoader.prototype.setOptions = function(e) {
+    }, s.ExternalURILoader.prototype.setOptions = function(e) {
         var o, t = {
             protocol: null,
             host: null,
             pathname: null
         };
         for (o in t) this.options[o] = (void 0 !== e[o] ? e : t)[o];
-    }, a.ExternalURILoader.prototype.executeRequest = function(e, o) {
-        var t, i, r, n, s = this;
-        if ("undefined" != typeof XMLHttpRequest) return function(e, o) {
-            var t, r = new XMLHttpRequest(), i = s.options.protocol + "://" + s.options.host + "/" + s.options.pathname + "?", n = [];
-            e.JSONPCallback && (a = e.JSONPCallback, delete e.JSONPCallback, e[a] = function(o) {
+    }, s.ExternalURILoader.prototype.executeRequest = function(e, o, t) {
+        var r, i, n, a, d = this;
+        if ("undefined" != typeof XMLHttpRequest) return function(e, o, t) {
+            var r, i = new XMLHttpRequest(), n = d.options.protocol + "://" + d.options.host + "/" + d.options.pathname + "?", a = [];
+            e.JSONPCallback && (s = e.JSONPCallback, delete e.JSONPCallback, e[s] = function(o) {
                 var e = Date.now(), t = "jsonp" + Math.round(e + 1000001 * Math.random());
-                return d[t] = function(e) {
-                    o(e), delete d[t];
+                return c[t] = function(e) {
+                    o(e), delete c[t];
                 }, t;
             }(o));
-            for (t in e) e.hasOwnProperty(t) && n.push(t + "=" + e[t]);
+            for (r in e) e.hasOwnProperty(r) && a.push(r + "=" + e[r]);
             {
-                var a;
-                i += n.join("&"), a ? ((a = document.createElement("script")).src = i, document.getElementsByTagName("head")[0].appendChild(a)) : (r.onload = function() {
+                var s;
+                n += a.join("&"), s ? ((s = document.createElement("script")).src = n, document.getElementsByTagName("head")[0].appendChild(s)) : (i.onload = function() {
                     if (200 != this.status) return console.log("Received HTTP status code " + this.status + " when attempting geocoding request."), 
                     o(null);
                     if (!this.responseText || !this.responseText.length) return console.log("Received empty data when attempting geocoding request."), 
@@ -152,17 +121,19 @@ function(a, d) {
                     }
                     return e ? o(e) : (console.log("Received unexpected JSON data when attempting geocoding request."), 
                     o(null));
-                }, r.open("GET", i), r.send());
+                }, i.open("GET", n), Array.isArray(t) && t.forEach(function(e, o) {
+                    i.setRequestHeader(e.name, e.value);
+                }), i.send());
             }
-        }(e, o);
+        }(e, o, t);
         try {
             require("url");
-            return t = e, i = o, r = require("url"), n = require(s.options.protocol), t = {
-                protocol: s.options.protocol,
-                host: s.options.host,
-                pathname: s.options.pathname,
-                query: t
-            }, t = r.format(t), void n.get(t, function(r) {
+            return r = e, i = o, n = require("url"), a = require(d.options.protocol), r = {
+                protocol: d.options.protocol,
+                host: d.options.host,
+                pathname: d.options.pathname,
+                query: r
+            }, r = n.format(r), void a.get(r, function(r) {
                 if (200 != r.statusCode) throw "Received HTTP status code " + r.statusCode + " when attempting geocoding request.";
                 r.data = "", r.setEncoding("utf8"), r.on("data", function(e) {
                     r.data += e;
@@ -177,7 +148,7 @@ function(a, d) {
                     if (e && e.status) {
                         if ("OVER_QUERY_LIMIT" === e.status) throw "Exceeded daily quota when attempting geocoding request.";
                         if ("OK" === e.status && e.results) {
-                            for (;o < e.results.length; o++) t.push(a.GoogleAPIProvider.prototype.mapToGeocoded(e.results[o]));
+                            for (;o < e.results.length; o++) t.push(s.GoogleAPIProvider.prototype.mapToGeocoded(e.results[o]));
                             return i(t);
                         }
                     }
@@ -496,6 +467,57 @@ function(t) {
         return o.latitude = +e.lat, o.longitude = +e.lon, o.streetNumber = void 0 !== e.address.house_number ? e.address.house_number : void 0, 
         o.streetName = e.address.road, o.city = e.address.city, o.region = e.address.state, 
         o.postal_code = e.address.postcode, o;
+    };
+}(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
+function(t) {
+    "use strict";
+    t.RadarProvider = function(e, o) {
+        if (void 0 === e) throw "No external loader defined.";
+        this.externalLoader = e, "object" != typeof o && (o = {});
+        var t, r = {
+            apiKey: ""
+        };
+        for (t in r) void 0 === o[t] && (o[t] = r[t]);
+        this.apiKey = o.apiKey;
+    }, t.RadarProvider.prototype = new t.ProviderBase(), t.RadarProvider.prototype.constructor = t.RadarProvider, 
+    t.RadarProvider.prototype.geocode = function(e, o) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.radar.io",
+            pathname: "v1/geocode/forward"
+        });
+        e = {
+            query: encodeURIComponent(e)
+        };
+        this.executeRequest(e, o, [ {
+            name: "Authorization",
+            value: this.apiKey
+        } ]);
+    }, t.RadarProvider.prototype.geodecode = function(e, o, t) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.radar.io",
+            pathname: "v1/geocode/reverse"
+        });
+        e = {
+            coordinates: o + "," + e
+        };
+        this.executeRequest(e, t, [ {
+            name: "Authorization",
+            value: this.apiKey
+        } ]);
+    }, t.RadarProvider.prototype.mapToGeocoded = function(e) {
+        var o = new t.Geocoded();
+        return o.latitude = e.latitude, o.longitude = e.longitude, o.streetNumber = void 0 !== e.number ? e.number : null, 
+        o.city = e.city, o.region = e.state, o.streetName = void 0 !== e.street ? e.street : null, 
+        o.postal_code = e.postalCode, o;
+    }, t.RadarProvider.prototype.executeRequest = function(e, r, o) {
+        var i = this;
+        this.externalLoader.executeRequest(e, function(e) {
+            var o = [];
+            if (e.addresses.length) for (var t in e.addresses) o.push(i.mapToGeocoded(e.addresses[t]));
+            r(o);
+        }, o);
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
 function(t) {
