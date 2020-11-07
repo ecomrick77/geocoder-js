@@ -35,6 +35,12 @@ The following table summarizes the features of each:
       <td>yes</td>
     </tr>
     <tr>
+      <td>Geocodio</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
       <td>Google Maps</td>
       <td>yes</td>
       <td>untested</td>

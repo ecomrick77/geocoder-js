@@ -79,7 +79,7 @@ require("../ExternalURILoader.js")), function(r) {
             provider: e
         });
         var t = new r.ExternalURILoader();
-        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "here" == e.provider ? o = new r.HereProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
+        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "geocodio" == e.provider ? o = new r.GeocodioProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "here" == e.provider ? o = new r.HereProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
         o;
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
@@ -202,6 +202,53 @@ require("../Geocoded.js"), require("../providers/ProviderBase.js")), function(t)
         return o.latitude = e.point.coordinates[0], o.longitude = e.point.coordinates[1], 
         o.streetName = e.address.addressLine, o.city = e.address.locality, o.region = e.address.adminDistrict, 
         o.postal_code = e.address.postalCode, o;
+    };
+}(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
+function(t) {
+    "use strict";
+    t.GeocodioProvider = function(e, o) {
+        if (void 0 === e) throw "No external loader defined.";
+        this.externalLoader = e, "object" != typeof o && (o = {});
+        var t, r = {
+            apiKey: ""
+        };
+        for (t in r) void 0 === o[t] && (o[t] = r[t]);
+        this.apiKey = o.apiKey;
+    }, t.GeocodioProvider.prototype = new t.ProviderBase(), t.GeocodioProvider.prototype.constructor = t.GeocodioProvider, 
+    t.GeocodioProvider.prototype.geocode = function(e, o) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.geocod.io",
+            pathname: "v1.6/geocode"
+        });
+        e = {
+            api_key: this.apiKey,
+            q: encodeURIComponent(e)
+        };
+        this.executeRequest(e, o);
+    }, t.GeocodioProvider.prototype.geodecode = function(e, o, t) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.geocod.io",
+            pathname: "v1.6/reverse"
+        });
+        o = {
+            api_key: this.apiKey,
+            q: e + "," + o
+        };
+        this.executeRequest(o, t);
+    }, t.GeocodioProvider.prototype.mapToGeocoded = function(e) {
+        var o = new t.Geocoded();
+        return o.latitude = e.location.lat, o.longitude = e.location.lng, o.streetNumber = void 0 !== e.address_components.number ? e.address_components.number : null, 
+        o.city = e.address_components.city, o.region = e.address_components.state, o.streetName = e.address_components.formatted_street, 
+        o.postal_code = e.address_components.zip, o;
+    }, t.GeocodioProvider.prototype.executeRequest = function(e, r) {
+        var i = this;
+        this.externalLoader.executeRequest(e, function(e) {
+            var o = [];
+            if (e.results.length) for (var t in e.results) o.push(i.mapToGeocoded(e.results[t]));
+            r(o);
+        });
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js"), 
 require("../Geocoded.js"), require("../providers/ProviderBase.js")), function(i) {

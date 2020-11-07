@@ -1,0 +1,39 @@
+<html lang="en">
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>Geocoder.js: Geocodio Simple Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="../dist/geocoder.js"></script>
+    <script>
+      /*
+      let geocodioGeocoder = new GeocoderJS.createGeocoder({provider: 'geocodio', apiKey: 'YOUR-API-KEY-HERE'});
+      geocodioGeocoder.geocode('1600 Pennsylvania Ave NW, Washington, DC', function(result) {
+        console.log(result);
+      });
+
+      geocodioGeocoder.geodecode("38.8976998", "-77.03655315", function(result) {
+        console.log(result);
+      });
+       */
+    </script>
+  </head>
+  <body>
+  <div id="map" style="width:800px; height:600px;"></div>
+  <script>
+    let geocodioGeocoder = new GeocoderJS.createGeocoder({provider: 'geocodio', apiKey: '1a75f5777a5a6417655f165f011005175353533'});
+    geocodioGeocoder.geocode('1600 Pennsylvania Ave NW, Washington, DC', function(result) {
+      let ll = result[0]
+      let mapOptions = {
+        center: [ll.latitude, ll.longitude],
+        zoom: 16
+      }
+      let map = new L.map('map', mapOptions);
+      L.marker([ll.latitude, ll.longitude]).addTo(map);
+      let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      map.addLayer(layer);
+    });
+  </script>
+  </body>
+</html>
