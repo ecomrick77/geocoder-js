@@ -44,6 +44,8 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
       provider = new GeocoderJS.MapboxProvider(externalLoader, options);
     } else if(options.provider == 'mapquest'){
       provider = new GeocoderJS.MapquestProvider(externalLoader, options);
+    } else if(options.provider == 'opencage'){
+      provider = new GeocoderJS.OpenCageProvider(externalLoader, options);
     } else if(options.provider == 'openstreetmap'){
       provider = new GeocoderJS.OpenStreetMapProvider(externalLoader, options);
     } else if(options.provider == 'radar'){

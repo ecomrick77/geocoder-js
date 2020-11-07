@@ -77,6 +77,12 @@ The following table summarizes the features of each:
       <td>yes</td>
     </tr>
     <tr>
+      <td>OpenCage</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
       <td>OpenStreetMap</td>
       <td>yes</td>
       <td>untested</td>

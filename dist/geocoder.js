@@ -79,7 +79,7 @@ require("../ExternalURILoader.js")), function(r) {
             provider: e
         });
         var t = new r.ExternalURILoader();
-        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "geoapify" == e.provider ? o = new r.GeoapifyProvider(t, e) : "geocodio" == e.provider ? o = new r.GeocodioProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "here" == e.provider ? o = new r.HereProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
+        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "geoapify" == e.provider ? o = new r.GeoapifyProvider(t, e) : "geocodio" == e.provider ? o = new r.GeocodioProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "here" == e.provider ? o = new r.HereProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "opencage" == e.provider ? o = new r.OpenCageProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
         o;
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
@@ -560,6 +560,53 @@ function(t) {
         this.externalLoader.executeRequest(e, function(e) {
             var o = [];
             if (e.results[0].locations.length) for (var t in e.results[0].locations) o.push(i.mapToGeocoded(e.results[0].locations[t]));
+            r(o);
+        });
+    };
+}(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
+function(t) {
+    "use strict";
+    t.OpenCageProvider = function(e, o) {
+        if (void 0 === e) throw "No external loader defined.";
+        this.externalLoader = e, "object" != typeof o && (o = {});
+        var t, r = {
+            apiKey: ""
+        };
+        for (t in r) void 0 === o[t] && (o[t] = r[t]);
+        this.apiKey = o.apiKey;
+    }, t.OpenCageProvider.prototype = new t.ProviderBase(), t.OpenCageProvider.prototype.constructor = t.OpenCageProvider, 
+    t.OpenCageProvider.prototype.geocode = function(e, o) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.opencagedata.com",
+            pathname: "geocode/v1/json"
+        });
+        e = {
+            key: this.apiKey,
+            q: encodeURIComponent(e)
+        };
+        this.executeRequest(e, o);
+    }, t.OpenCageProvider.prototype.geodecode = function(e, o, t) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "api.opencagedata.com",
+            pathname: "geocode/v1/json"
+        });
+        o = {
+            key: this.apiKey,
+            q: e + "," + o
+        };
+        this.executeRequest(o, t);
+    }, t.OpenCageProvider.prototype.mapToGeocoded = function(e) {
+        var o = new t.Geocoded();
+        return o.latitude = e.geometry.lat, o.longitude = e.geometry.lng, o.streetNumber = void 0 !== e.components.house_number ? e.components.house_number : null, 
+        o.city = e.components.city, o.region = e.components.state, o.streetName = e.components.road, 
+        o.postal_code = e.components.postcode, o;
+    }, t.OpenCageProvider.prototype.executeRequest = function(e, r) {
+        var i = this;
+        this.externalLoader.executeRequest(e, function(e) {
+            var o = [];
+            if (e.results.length) for (var t in e.results) o.push(i.mapToGeocoded(e.results[t]));
             r(o);
         });
     };
