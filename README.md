@@ -29,79 +29,79 @@ The following table summarizes the features of each:
   </thead>
   <tbody>
     <tr>
-      <td>Bing</td>
+      <td><a href="https://docs.microsoft.com/en-us/bingmaps/rest-services/" target="_blank">Bing</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Geoapify</td>
+      <td><a href="https://www.geoapify.com/" target="_blank">Geoapify</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Geocodio</td>
+      <td><a href="https://www.geocod.io/" target="_blank">Geocodio</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Google Maps</td>
+      <td><a href="https://developers.google.com/maps/documentation/geocoding/overview" target="_blank">Google</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Here</td>
+      <td><a href="https://developer.here.com/documentation/geocoding-search-api/dev_guide/index.html" target="_blank">Here</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>LocationIQ</td>
+      <td><a href="https://locationiq.com/geocoding" target="_blank">LocationIQ</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Mapbox</td>
+      <td><a href="https://docs.mapbox.com/api/search/" target="_blank">Mapbox</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Mapquest</td>
+      <td><a href="https://developer.mapquest.com/documentation/geocoding-api/" target="_blank">Mapquest</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>OpenCage</td>
+      <td><a href="https://opencagedata.com/tutorials/geocode-in-javascript" target="">OpenCage</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>OpenStreetMap</td>
+      <td><a href="https://nominatim.org/release-docs/develop/api/Search/" target="_blank">OpenStreetMap</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Radar</td>
+      <td><a href="https://radar.io/product/api" target="_blank">Radar</a></td>
       <td>yes</td>
       <td>no</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>TomTom</td>
+      <td><a href="https://developer.tomtom.com/search-api/search-api-documentation-geocoding/geocode" target="_blank">TomTom</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
     </tr>
     <tr>
-      <td>Yandex</td>
+      <td><a href="https://yandex.com/dev/maps/geocoder/" target="_blank">Yandex</a></td>
       <td>yes</td>
       <td>untested</td>
       <td>yes</td>
