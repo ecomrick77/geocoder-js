@@ -30,6 +30,8 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
 
     if(options.provider == 'bing'){
       provider = new GeocoderJS.BingProvider(externalLoader, options);
+    } else if(options.provider == 'geoapify'){
+      provider = new GeocoderJS.GeoapifyProvider(externalLoader, options);
     } else if(options.provider == 'geocodio'){
       provider = new GeocoderJS.GeocodioProvider(externalLoader, options);
     } else if(options.provider == 'google'){
