@@ -32,6 +32,8 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
       provider = new GeocoderJS.BingProvider(externalLoader, options);
     } else if(options.provider == 'google'){
       provider = new GeocoderJS.GoogleAPIProvider(externalLoader, options);
+    } else if(options.provider == 'here'){
+      provider = new GeocoderJS.HereProvider(externalLoader, options);
     } else if(options.provider == 'locationlq'){
       provider = new GeocoderJS.LocationIQProvider(externalLoader, options);
     } else if(options.provider == 'mapbox'){

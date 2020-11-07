@@ -41,6 +41,12 @@ The following table summarizes the features of each:
       <td>yes</td>
     </tr>
     <tr>
+      <td>Here</td>
+      <td>yes</td>
+      <td>untested</td>
+      <td>yes</td>
+    </tr>
+    <tr>
       <td>LocationIQ</td>
       <td>yes</td>
       <td>untested</td>

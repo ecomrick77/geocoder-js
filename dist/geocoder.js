@@ -79,7 +79,7 @@ require("../ExternalURILoader.js")), function(r) {
             provider: e
         });
         var t = new r.ExternalURILoader();
-        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
+        return "bing" == e.provider ? o = new r.BingProvider(t, e) : "google" == e.provider ? o = new r.GoogleAPIProvider(t, e) : "here" == e.provider ? o = new r.HereProvider(t, e) : "locationlq" == e.provider ? o = new r.LocationIQProvider(t, e) : "mapbox" == e.provider ? o = new r.MapboxProvider(t, e) : "mapquest" == e.provider ? o = new r.MapquestProvider(t, e) : "openstreetmap" == e.provider ? o = new r.OpenStreetMapProvider(t, e) : "radar" == e.provider ? o = new r.RadarProvider(t, e) : "tomtom" == e.provider ? o = new r.TomTomProvider(t, e) : "yandex" == e.provider && (o = new r.YandexProvider(t, e)), 
         o;
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
@@ -270,6 +270,53 @@ require("../Geocoded.js"), require("../providers/ProviderBase.js")), function(i)
             t.postal_code = e.address_components[o].long_name;
         }
         return t;
+    };
+}(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
+function(t) {
+    "use strict";
+    t.HereProvider = function(e, o) {
+        if (void 0 === e) throw "No external loader defined.";
+        this.externalLoader = e, "object" != typeof o && (o = {});
+        var t, r = {
+            apiKey: ""
+        };
+        for (t in r) void 0 === o[t] && (o[t] = r[t]);
+        this.apiKey = o.apiKey;
+    }, t.HereProvider.prototype = new t.ProviderBase(), t.HereProvider.prototype.constructor = t.HereProvider, 
+    t.HereProvider.prototype.geocode = function(e, o) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "geocode.search.hereapi.com",
+            pathname: "v1/geocode"
+        });
+        e = {
+            apiKey: this.apiKey,
+            q: encodeURIComponent(e)
+        };
+        this.executeRequest(e, o);
+    }, t.HereProvider.prototype.geodecode = function(e, o, t) {
+        this.externalLoader.setOptions({
+            protocol: "https",
+            host: "geocode.search.hereapi.com",
+            pathname: "v1/revgeocode"
+        });
+        o = {
+            apiKey: this.apiKey,
+            at: e + "," + o
+        };
+        this.executeRequest(o, t);
+    }, t.HereProvider.prototype.mapToGeocoded = function(e) {
+        var o = new t.Geocoded();
+        return o.latitude = e.position.lat, o.longitude = e.position.lng, o.streetNumber = void 0 !== e.address.houseNumber ? e.address.houseNumber : null, 
+        o.city = e.address.city, o.region = e.address.state, o.streetName = e.address.street, 
+        o.postal_code = e.address.postalCode, o;
+    }, t.HereProvider.prototype.executeRequest = function(e, r) {
+        var i = this;
+        this.externalLoader.executeRequest(e, function(e) {
+            var o = [];
+            if (e.items.length) for (var t in e.items) o.push(i.mapToGeocoded(e.items[t]));
+            r(o);
+        });
     };
 }(GeocoderJS), void 0 === GeocoderJS && "function" == typeof require && (GeocoderJS = require("../GeocoderJS.js")), 
 function(t) {
