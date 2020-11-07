@@ -50,6 +50,9 @@ if (typeof GeocoderJS === "undefined" && typeof require === "function") {
       case 'mapbox':
         provider = new GeocoderJS.MapboxProvider(externalLoader, options);
         break;
+      case 'tomtom':
+        provider = new GeocoderJS.TomTomProvider(externalLoader, options);
+        break;
     }
 
     return provider;
